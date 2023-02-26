@@ -2,6 +2,8 @@
 
   namespace App\Providers;
 
+  use App\Models\Design;
+  use App\Policies\DesignPolicy;
   use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
   use Laravel\Passport\Passport;
 
@@ -14,6 +16,7 @@
      */
     protected $policies = [
       // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+      Design::class => DesignPolicy::class,
     ];
 
     /**

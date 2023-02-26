@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('designs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('team_id');
+            $table->unsignedBigInteger('team_id')->nullable();
             $table->string('image');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('slug')->nullable();
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->boolean('is_live')->default(false);
-            $table->dateTimeTz('published_date]')->nullable();
+            $table->dateTimeTz('published_date')->nullable();
             $table->boolean('upload_success')->default(false);
             $table->string('disk')->default('public');
             $table->timestamps();

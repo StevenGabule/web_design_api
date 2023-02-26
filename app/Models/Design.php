@@ -1,11 +1,26 @@
 <?php
 
-namespace App\Models;
+  namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+  use Illuminate\Database\Eloquent\Factories\HasFactory;
+  use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+  use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Design extends Model
-{
-    use HasFactory;
-}
+  /**
+   * @property string $disk
+   * @property string $image
+   * @property integer $user_id
+   * @property integer $id
+   * @property boolean $upload_success
+   */
+  class Design extends Model
+  {
+    use HasFactory, SoftDeletes;
+
+    protected $guarded = [];
+
+    public function user(): BelongsTo
+    {
+      return $this->belongsTo(User::class);
+    }
+  }
