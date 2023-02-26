@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Designs;
 
-use App\Models\Chat;
-use App\Http\Requests\StoreChatRequest;
-use App\Http\Requests\UpdateChatRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Design;
+use App\Http\Requests\StoreDesignRequest;
+use App\Http\Requests\UpdateDesignRequest;
 
-class ChatController extends Controller
+class DesignController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreChatRequest  $request
+     * @param  \App\Http\Requests\StoreDesignRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreChatRequest $request)
+    public function store(StoreDesignRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class ChatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Chat  $chat
+     * @param  \App\Models\Design  $design
      * @return \Illuminate\Http\Response
      */
-    public function show(Chat $chat)
+    public function show(Design $design)
     {
         //
     }
@@ -53,10 +54,10 @@ class ChatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Chat  $chat
+     * @param  \App\Models\Design  $design
      * @return \Illuminate\Http\Response
      */
-    public function edit(Chat $chat)
+    public function edit(Design $design)
     {
         //
     }
@@ -64,11 +65,11 @@ class ChatController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateChatRequest  $request
-     * @param  \App\Models\Chat  $chat
+     * @param  \App\Http\Requests\UpdateDesignRequest  $request
+     * @param  \App\Models\Design  $design
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateChatRequest $request, Chat $chat)
+    public function update(UpdateDesignRequest $request, Design $design)
     {
         //
     }
@@ -76,10 +77,10 @@ class ChatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Chat  $chat
+     * @param  \App\Models\Design  $design
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chat $chat)
+    public function destroy(Design $design)
     {
         //
     }

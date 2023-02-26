@@ -1,7 +1,10 @@
 <?php
 
-  use App\Http\Controllers\ResetPasswordController;
-  use App\Http\Controllers\Auth\{ForgotPasswordController, LoginController, RegisterController, VerificationController};
+  use App\Http\Controllers\Auth\{ForgotPasswordController,
+    LoginController,
+    RegisterController,
+    ResetPasswordController,
+    VerificationController};
   use App\Http\Controllers\MeController;
   use Illuminate\Support\Facades\Route;
 
@@ -22,13 +25,14 @@
   |--------------------------------------------------------------------------
   */
   Route::prefix('auth')->group(function () {
-    Route::post('/register', [RegisterController::class, 'register']);
-    Route::post('/verification/verify', [VerificationController::class, 'verify'])->name('verification.verify');
-    Route::post('/verification/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    Route::middleware('guest:api')->group(function () {
+      Route::post('/register', [RegisterController::class, 'register']);
+      Route::post('/verification/verify', [VerificationController::class, 'verify'])->name('verification.verify');
+      Route::post('/verification/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+      Route::post('/login', [LoginController::class, 'login']);
+      Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+      Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    });
 
     Route::middleware('auth:api')->group(function () {
       Route::prefix('user')->group(function () {

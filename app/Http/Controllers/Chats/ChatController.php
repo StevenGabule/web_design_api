@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Chats;
 
-use App\Models\Invitation;
-use App\Http\Requests\StoreInvitationRequest;
-use App\Http\Requests\UpdateInvitationRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Chat;
+use App\Http\Requests\StoreChatRequest;
+use App\Http\Requests\UpdateChatRequest;
 
-class InvitationController extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class InvitationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreInvitationRequest  $request
+     * @param  \App\Http\Requests\StoreChatRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInvitationRequest $request)
+    public function store(StoreChatRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class InvitationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Invitation  $invitation
+     * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function show(Invitation $invitation)
+    public function show(Chat $chat)
     {
         //
     }
@@ -53,10 +54,10 @@ class InvitationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Invitation  $invitation
+     * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invitation $invitation)
+    public function edit(Chat $chat)
     {
         //
     }
@@ -64,11 +65,11 @@ class InvitationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateInvitationRequest  $request
-     * @param  \App\Models\Invitation  $invitation
+     * @param  \App\Http\Requests\UpdateChatRequest  $request
+     * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInvitationRequest $request, Invitation $invitation)
+    public function update(UpdateChatRequest $request, Chat $chat)
     {
         //
     }
@@ -76,10 +77,10 @@ class InvitationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Invitation  $invitation
+     * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invitation $invitation)
+    public function destroy(Chat $chat)
     {
         //
     }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Teams;
 
-use App\Models\Design;
-use App\Http\Requests\StoreDesignRequest;
-use App\Http\Requests\UpdateDesignRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Invitation;
+use App\Http\Requests\StoreInvitationRequest;
+use App\Http\Requests\UpdateInvitationRequest;
 
-class DesignController extends Controller
+class InvitationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class DesignController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDesignRequest  $request
+     * @param  \App\Http\Requests\StoreInvitationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDesignRequest $request)
+    public function store(StoreInvitationRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class DesignController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Design  $design
+     * @param  \App\Models\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function show(Design $design)
+    public function show(Invitation $invitation)
     {
         //
     }
@@ -53,10 +54,10 @@ class DesignController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Design  $design
+     * @param  \App\Models\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Design $design)
+    public function edit(Invitation $invitation)
     {
         //
     }
@@ -64,11 +65,11 @@ class DesignController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDesignRequest  $request
-     * @param  \App\Models\Design  $design
+     * @param  \App\Http\Requests\UpdateInvitationRequest  $request
+     * @param  \App\Models\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDesignRequest $request, Design $design)
+    public function update(UpdateInvitationRequest $request, Invitation $invitation)
     {
         //
     }
@@ -76,10 +77,10 @@ class DesignController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Design  $design
+     * @param  \App\Models\Invitation  $invitation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Design $design)
+    public function destroy(Invitation $invitation)
     {
         //
     }
