@@ -1,13 +1,8 @@
 <?php
 
-  use App\Http\Controllers\Designs\DesignController;
-  use App\Http\Controllers\Designs\UploadController;
+  use App\Http\Controllers\Designs\{CommentController, DesignController, UploadController};
   use App\Http\Controllers\User\MeController;
-  use App\Http\Controllers\Auth\{ForgotPasswordController,
-    LoginController,
-    RegisterController,
-    ResetPasswordController,
-    VerificationController};
+  use App\Http\Controllers\Auth\{ForgotPasswordController,LoginController,RegisterController,ResetPasswordController,    VerificationController};
   use Illuminate\Support\Facades\Route;
 
   /*
@@ -39,6 +34,15 @@
       Route::post('/restore/{design}', [DesignController::class, 'restore'])->name('design.restore');
       Route::delete('/force-delete/{design}', [DesignController::class, 'forceDelete'])->name('design.force_delete');
     });
+
+    Route::prefix('comment')->group(function () {
+      Route::post('/store/{designId}', [CommentController::class, 'store'])->name('comment.store');
+      Route::put('/update/{commentId}', [CommentController::class, 'update'])->name('comment.update');
+      Route::delete('/destroy/{commentId}', [CommentController::class, 'destroy'])->name('comment.destroy');
+      Route::post('/restore/{commentId}', [CommentController::class, 'restore'])->name('comment.restore');
+      Route::delete('/force-delete/{commentId}', [CommentController::class, 'forceDelete'])->name('comment.force_delete');
+    });
+
   });
 
 

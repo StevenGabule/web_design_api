@@ -3,7 +3,7 @@
   namespace App\Models;
 
   use Illuminate\Database\Eloquent\Factories\HasFactory;
-  use Illuminate\Database\Eloquent\{Model,SoftDeletes};
+  use Illuminate\Database\Eloquent\{Model, Relations\MorphMany, SoftDeletes};
   use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
   /**
@@ -22,5 +22,11 @@
     public function user(): BelongsTo
     {
       return $this->belongsTo(User::class);
+    }
+
+    public function comments(): MorphMany
+    {
+      return $this->morphMany(Comment::class, 'commentable')
+        ->orderBy('created_at', 'asc');
     }
   }

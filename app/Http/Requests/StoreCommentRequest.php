@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class StoreCommentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,10 @@ class StoreCommentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    #[ArrayShape(['body' => "string"])] public function rules(): array
     {
         return [
-            //
+            'body' => 'required|min:8'
         ];
     }
 }

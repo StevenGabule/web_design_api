@@ -1,10 +1,8 @@
 <?php
 
-
 	namespace App\Repositories\Contracts;
-
 
 	interface IDesign
 	{
-	  public function all();
+    public function addComment($designId, array $data);
 	}

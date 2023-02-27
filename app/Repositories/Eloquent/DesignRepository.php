@@ -13,4 +13,9 @@
     {
       return Design::class;
     }
-	}
+
+    public function addComment($designId, array $data)
+    {
+      return $this->find($designId)->comments()->create($data);
+    }
+  }
