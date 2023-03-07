@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Requests;
+  namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+  use Illuminate\Foundation\Http\FormRequest;
+  use JetBrains\PhpStorm\ArrayShape;
 
-class UpdateTeamRequest extends FormRequest
-{
+  class UpdateTeamRequest extends FormRequest
+  {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+      return true;
     }
 
     /**
@@ -21,10 +22,11 @@ class UpdateTeamRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    #[ArrayShape(['name' => 'string'])]
+    public function rules(): array
     {
-        return [
-            //
-        ];
+      return [
+        'name' => 'required|string|max:80|unique:teams,name'
+      ];
     }
-}
+  }

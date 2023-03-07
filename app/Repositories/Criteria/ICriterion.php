@@ -5,4 +5,5 @@
   interface ICriterion
   {
     public function apply($model);
+
   }

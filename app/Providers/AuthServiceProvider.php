@@ -3,7 +3,11 @@
   namespace App\Providers;
 
   use App\Models\Design;
+  use App\Models\Invitation;
+  use App\Models\Team;
   use App\Policies\DesignPolicy;
+  use App\Policies\InvitationPolicy;
+  use App\Policies\TeamPolicy;
   use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
   use Laravel\Passport\Passport;
 
@@ -15,8 +19,9 @@
      * @var array<class-string, class-string>
      */
     protected $policies = [
-      // 'App\Models\Model' => 'App\Policies\ModelPolicy',
       Design::class => DesignPolicy::class,
+      Team::class => TeamPolicy::class,
+      Invitation::class => InvitationPolicy::class,
     ];
 
     /**

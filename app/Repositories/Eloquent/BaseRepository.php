@@ -3,19 +3,16 @@
 
 	namespace App\Repositories\Eloquent;
 
-
   use App\Exceptions\ModelNotDefined;
-  use App\Models\Design;
   use App\Repositories\Contracts\IBase;
   use App\Repositories\Criteria\ICriteria;
-  use Error;
   use Illuminate\Contracts\Container\BindingResolutionException;
   use Illuminate\Database\Eloquent\Model;
   use Illuminate\Support\Arr;
 
   abstract class BaseRepository implements IBase, ICriteria
 	{
-    protected Model $model;
+    protected $model;
 
     /**
      * @throws BindingResolutionException
@@ -89,7 +86,7 @@
       return $this->model::withTrashed()->find($id)->forceDelete();
     }
 
-    public function withCriteria(...$criteria): static
+    public function withCriteria(...$criteria)
     {
       $criteria = Arr::flatten($criteria);
       foreach ($criteria as $criterion) {

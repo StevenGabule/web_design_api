@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Invitation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
-class StoreTeamRequest extends FormRequest
+class ResponseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,12 @@ class StoreTeamRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    #[ArrayShape(['name' => "string"])]
+    #[ArrayShape(['token' => "string", 'decision' => "string"])]
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:80|unique:teams,name'
+          'token' => 'required',
+          'decision' => 'required'
         ];
     }
 }

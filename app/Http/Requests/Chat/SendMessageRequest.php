@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Chat;
 
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
-class StoreTeamRequest extends FormRequest
+class SendMessageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreTeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -22,11 +22,12 @@ class StoreTeamRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    #[ArrayShape(['name' => "string"])]
+    #[ArrayShape(['recipient' => "string", 'body' => "string"])]
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:80|unique:teams,name'
+            'recipient' => 'required',
+            'body' => 'required',
         ];
     }
 }

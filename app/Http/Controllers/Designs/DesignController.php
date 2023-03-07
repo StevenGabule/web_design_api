@@ -124,4 +124,19 @@
       $this->designs->forceDelete($id);
       return response()->json([], 204);
     }
+
+    public function like(int $id): JsonResponse
+    {
+      $total = $this->designs->like($id);
+      return response()->json([
+        'message' => 'Successful',
+        'total' => $total
+      ]);
+    }
+
+    public function checkIfUserHasLiked(int $id): JsonResponse
+    {
+      $isLiked = $this->designs->isLikedByUser($id);
+      return response()->json(['liked' => $isLiked]);
+    }
   }

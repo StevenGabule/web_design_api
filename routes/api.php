@@ -1,8 +1,15 @@
 <?php
 
+  use App\Http\Controllers\Chats\ChatController;
+  use App\Http\Controllers\Teams\InvitationController;
+  use App\Http\Controllers\Teams\TeamController;
   use App\Http\Controllers\Designs\{CommentController, DesignController, UploadController};
   use App\Http\Controllers\User\MeController;
-  use App\Http\Controllers\Auth\{ForgotPasswordController,LoginController,RegisterController,ResetPasswordController,    VerificationController};
+  use App\Http\Controllers\Auth\{ForgotPasswordController,
+    LoginController,
+    RegisterController,
+    ResetPasswordController,
+    VerificationController};
   use Illuminate\Support\Facades\Route;
 
   /*
@@ -33,6 +40,10 @@
       Route::delete('/destroy/{design}', [DesignController::class, 'destroy'])->name('design.destroy');
       Route::post('/restore/{design}', [DesignController::class, 'restore'])->name('design.restore');
       Route::delete('/force-delete/{design}', [DesignController::class, 'forceDelete'])->name('design.force_delete');
+
+      // like and unliked
+      Route::post('/{id}/like', [DesignController::class, 'like']);
+      Route::post('/{id}/liked', [DesignController::class, 'checkIfUserHasLiked']);
     });
 
     Route::prefix('comment')->group(function () {
@@ -42,6 +53,30 @@
       Route::post('/restore/{commentId}', [CommentController::class, 'restore'])->name('comment.restore');
       Route::delete('/force-delete/{commentId}', [CommentController::class, 'forceDelete'])->name('comment.force_delete');
     });
+
+    Route::prefix('teams')->group(function () {
+      Route::post('/', [TeamController::class, 'store']);
+      Route::get('/{id}', [TeamController::class, 'findById']);
+      Route::put('/{id}', [TeamController::class, 'update']);
+      Route::delete('/{id}', [TeamController::class, 'destroy']);
+      Route::get('/users', [TeamController::class, 'fetchUserTeams']);
+    });
+
+    Route::prefix('invitations')->group(function () {
+      Route::post('/{teamId}', [InvitationController::class, 'invite']);
+      Route::post('/{id}/resend', [InvitationController::class, 'resend']);
+      Route::post('/{id}/respond', [InvitationController::class, 'respond']);
+      Route::delete('/{id}', [InvitationController::class, 'destroy']);
+    });
+
+    Route::prefix('chats')->group(function () {
+      Route::post('/', [ChatController::class, 'sendMessage']);
+      Route::get('/', [ChatController::class, 'getUserChats']);
+      Route::get('/{id}/messages', [ChatController::class, 'getChatMessages']);
+      Route::put('/{id}/markAsRead', [ChatController::class, 'markAsRead']);
+    });
+
+    Route::delete('messages/{id}', [ChatController::class, 'destroyMessage']);
 
   });
 
