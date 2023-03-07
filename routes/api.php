@@ -1,16 +1,35 @@
 <?php
 
+  use Illuminate\Support\Facades\Route;
   use App\Http\Controllers\Chats\ChatController;
-  use App\Http\Controllers\Teams\InvitationController;
-  use App\Http\Controllers\Teams\TeamController;
+  use App\Http\Controllers\Teams\{InvitationController, TeamController};
+  use App\Http\Controllers\UserController;
   use App\Http\Controllers\Designs\{CommentController, DesignController, UploadController};
   use App\Http\Controllers\User\MeController;
-  use App\Http\Controllers\Auth\{ForgotPasswordController,
-    LoginController,
-    RegisterController,
-    ResetPasswordController,
-    VerificationController};
-  use Illuminate\Support\Facades\Route;
+  use App\Http\Controllers\Auth\{ForgotPasswordController, LoginController, RegisterController, ResetPasswordController, VerificationController};
+
+  Route::prefix('designs')->group(function () {
+    Route::get('/', [DesignController::class, 'index']);
+    Route::get('/{id}', [DesignController::class, 'findDesign']);
+    Route::get('/slug/{slug}', [DesignController::class, 'findBySlug']);
+  });
+
+  Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{username}', [UserController::class, 'findByUsername']);
+    Route::get('/{id}/designs', [UserController::class, 'getForUser']);
+  });
+
+  Route::prefix('teams')->group(function () {
+    Route::get('/slug/{slug}', [TeamController::class, 'findBySlug']);
+    Route::get('/{id}/designs', [DesignController::class, 'getForTeam']);
+  });
+
+  Route::prefix('search')->group(function () {
+    Route::get('/designs', [DesignController::class, 'search']);
+    Route::get('/designers', [UserController::class, 'search']);
+  });
+
 
   /*
   |--------------------------------------------------------------------------

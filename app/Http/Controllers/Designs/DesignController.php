@@ -2,20 +2,32 @@
 
   namespace App\Http\Controllers\Designs;
 
+  use App\Http\Resources\DesignResource;
   use App\Models\Design;
   use App\Http\Controllers\Controller;
   use App\Http\Requests\UpdateDesignRequest;
+  use App\Repositories\Eloquent\Criteria\ForUser;
+  use App\Repositories\Eloquent\Criteria\IsLive;
+  use App\Repositories\Eloquent\Criteria\LatestFirst;
+  use EagerLoad;
   use Illuminate\Auth\Access\AuthorizationException;
   use Illuminate\Support\Facades\Storage;
-  use Illuminate\Http\{JsonResponse, Response};
+  use Illuminate\Http\{JsonResponse, Resources\Json\AnonymousResourceCollection, Response, Request};
   use Illuminate\Support\Str;
   use App\Repositories\Contracts\IDesign;
 
   class DesignController extends Controller
   {
 
+    /**
+     * @var IDesign
+     */
     protected IDesign $designs;
 
+    /**
+     * DesignController constructor.
+     * @param IDesign $designs
+     */
     public function __construct(IDesign $designs)
     {
       $this->designs = $designs;
@@ -24,34 +36,72 @@
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-      //
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Design $design
-     * @return Response
-     */
-    public function show(Design $design)
-    {
-      //
+      $designs = $this->designs->withCriteria([
+        new LatestFirst(),
+        new IsLive(),
+        new ForUser(2),
+        new EagerLoad(['user', 'comments'])
+      ])->all();
+      return DesignResource::collection($designs);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Design $design
-     * @return Response
+     * @param int $id
+     * @return DesignResource
      */
-    public function edit(Design $design)
+    public function findDesign(int $id): DesignResource
     {
-      //
+      $design = $this->designs->find($id);
+      return new DesignResource($design);
+    }
+
+    /**
+     * @param string $slug
+     * @return DesignResource
+     */
+    public function findBySlug(string $slug): DesignResource
+    {
+      $design = $this->designs->withCriteria([
+        new IsLive(),
+        new EagerLoad(['user', 'comments'])
+      ])->findWhereFirst('slug', $slug);
+      return new DesignResource($design);
+    }
+
+    /**
+     * @param int $teamId
+     * @return AnonymousResourceCollection
+     */
+    public function getForTeam(int $teamId): AnonymousResourceCollection
+    {
+      $designs = $this->designs
+                    ->withCriteria([new IsLive()])
+                    ->findWhere('team_id', $teamId);
+      return DesignResource::collection($designs);
+    }
+
+    /**
+     * @param int $userId
+     * @return AnonymousResourceCollection
+     */
+    public function getForUser(int $userId): AnonymousResourceCollection
+    {
+      $designs = $this->designs->findWhere('user_id', $userId);
+      return DesignResource::collection($designs);
+    }
+
+    /**
+     * @param int $id
+     * @return DesignResource
+     */
+    public function userOwnsDesign(int $id): DesignResource
+    {
+      $design = $this->designs->withCriteria([new ForUser(auth()->id())])->findWhereFirst('id', $id);
+      return new DesignResource($design);
     }
 
     /**
@@ -67,7 +117,7 @@
       $this->authorize('update', $design);
 
       if ($request->wantsJson()) {
-        $this->designs->update($design->id,[
+        $this->designs->update($design->id, [
           'team_id' => @$request->post('team'),
           'title' => $request->post('title'),
           'description' => $request->post('description'),
@@ -125,6 +175,10 @@
       return response()->json([], 204);
     }
 
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
     public function like(int $id): JsonResponse
     {
       $total = $this->designs->like($id);
@@ -134,9 +188,23 @@
       ]);
     }
 
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
     public function checkIfUserHasLiked(int $id): JsonResponse
     {
       $isLiked = $this->designs->isLikedByUser($id);
       return response()->json(['liked' => $isLiked]);
+    }
+
+    /**
+     * @param Request $request
+     * @return AnonymousResourceCollection
+     */
+    public function search(Request $request): AnonymousResourceCollection
+    {
+      $designs = $this->designs->search($request);
+      return DesignResource::collection($designs);
     }
   }
